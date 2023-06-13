@@ -29,6 +29,7 @@ function useCreateTodo() {
       alert(message || "Network Error");
       return false;
     }
+    setTodo("");
 
     return true;
   };
