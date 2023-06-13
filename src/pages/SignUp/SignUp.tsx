@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import SignUpContents from "../../pageContents/SignUpContents/SignUpContents";
 
-import { fetcher } from "../../network/api";
+import useSignUp from "./hooks/useSignUp";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -12,6 +12,8 @@ function SignUp() {
     password: "",
   });
   const [isValidate, setIsValidate] = useState(false);
+
+  const { submit } = useSignUp();
 
   const validationChecker = (email: string, password: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -41,33 +43,7 @@ function SignUp() {
   };
 
   const onSubmit = async () => {
-    const { email, password } = userInfo;
-    const response = await fetcher({
-      method: "POST",
-      url: "/auth/signup",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: {
-        email,
-        password,
-      },
-    });
-
-    const { isSuccess } = response;
-    if (isSuccess) {
-      setUserInfo({
-        email: "",
-        password: "",
-      });
-
-      navigate("/signin");
-    }
-
-    if (response.message.length > 0) {
-      alert(response.message);
-      return;
-    }
+    submit(userInfo);
   };
 
   useEffect(() => {

@@ -12,36 +12,31 @@ import useDeleteTodo from "./hooks/useDeleteTodo";
 function TodoList() {
   const navigate = useNavigate();
 
-  const { todoList, refetch } = useGetTodoList();
-  const { inputTodo, onChangeTodo, onCreateTodo } = useCreateTodo();
-  const {
-    updateIdx,
-    changedTodo,
-    onClickUpdate,
-    onChangeTodoInput,
-    onInit,
-    update,
-  } = useUpdateTodo({ todoList });
+  const { refetchTodoList, ...getTodo } = useGetTodoList();
+  const { create, ...createTodo } = useCreateTodo();
+  const { update, ...updateTodo } = useUpdateTodo({
+    todoList: getTodo.todoList,
+  });
   const { deleteTodo } = useDeleteTodo();
 
   const onCreate = async () => {
-    const isSuccess = await onCreateTodo();
+    const isSuccess = await create();
     if (isSuccess) {
-      refetch();
+      refetchTodoList();
     }
   };
 
   const onUpdate = async (id: number, checked: boolean, todo: string) => {
     const isSuccess = await update(id, checked, todo);
     if (isSuccess) {
-      refetch();
+      refetchTodoList();
     }
   };
 
   const onDelete = async (id: number) => {
     const isSuccess = await deleteTodo(id);
     if (isSuccess) {
-      refetch();
+      refetchTodoList();
     }
   };
 
@@ -54,15 +49,10 @@ function TodoList() {
 
   return (
     <TodoListContents
-      todoList={todoList}
-      inputTodo={inputTodo}
-      updateIdx={updateIdx}
-      changedTodo={changedTodo}
-      onChangeTodo={onChangeTodo}
+      {...getTodo}
+      {...createTodo}
+      {...updateTodo}
       onCreateTodo={onCreate}
-      onClickUpdate={onClickUpdate}
-      onChangeTodoInput={onChangeTodoInput}
-      onInit={onInit}
       onUpdate={onUpdate}
       onDelete={onDelete}
     />

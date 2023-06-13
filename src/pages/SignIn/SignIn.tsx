@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import SignInContents from "../../pageContents/SignInContents/SignInContents";
 
-import { fetcher } from "../../network/api";
+import useSignIn from "./hooks/useSignIn";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -12,6 +12,8 @@ function SignIn() {
     password: "",
   });
   const [isValidate, setIsValidate] = useState(false);
+
+  const { signIn } = useSignIn();
 
   const validationChecker = (email: string, password: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -41,36 +43,7 @@ function SignIn() {
   };
 
   const onSubmit = async () => {
-    const { email, password } = userInfo;
-    const response = await fetcher({
-      method: "POST",
-      url: "/auth/signin",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: {
-        email,
-        password,
-      },
-    });
-
-    const { isSuccess, message, data } = response;
-    if (isSuccess) {
-      const { access_token: token } = data;
-      window.localStorage.setItem("token", token);
-
-      setUserInfo({
-        email: "",
-        password: "",
-      });
-
-      navigate("/todo");
-    }
-
-    if (message.length > 0) {
-      alert(message);
-      return;
-    }
+    signIn(userInfo);
   };
 
   useEffect(() => {

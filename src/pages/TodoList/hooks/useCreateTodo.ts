@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { fetcher } from "../../../network/api";
 
+type UseCreateTodo = {
+  inputTodo: string;
+  onChangeTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onCreateTodo: () => boolean;
+};
+
 function useCreateTodo() {
   const [todo, setTodo] = useState("");
 
@@ -8,7 +14,7 @@ function useCreateTodo() {
     setTodo(e.target.value);
   };
 
-  const onCreateTodo = async () => {
+  const create = async () => {
     const token = window.localStorage.getItem("token");
 
     const response = await fetcher({
@@ -37,8 +43,9 @@ function useCreateTodo() {
   return {
     inputTodo: todo,
     onChangeTodo,
-    onCreateTodo,
+    create,
   };
 }
 
+export type { UseCreateTodo };
 export default useCreateTodo;

@@ -1,6 +1,8 @@
 import React from "react";
 
-import type { GetTodoResModel } from "../../pages/TodoList/hooks/useGetTodoList";
+import type { UseGetTodoList } from "../../pages/TodoList/hooks/useGetTodoList";
+import type { UseCreateTodo } from "../../pages/TodoList/hooks/useCreateTodo";
+import type { UseUpdateTodo } from "../../pages/TodoList/hooks/useUpdateTodo";
 
 import Todo from "./Todo/Todo";
 import Modify from "./Modify/Modify";
@@ -9,19 +11,13 @@ import classNames from "classnames/bind";
 import style from "./style.module.scss";
 const cx = classNames.bind(style);
 
-type Props = {
-  inputTodo: string;
-  updateIdx: number;
-  changedTodo: string;
-  todoList: Array<GetTodoResModel>;
-  onChangeTodo: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onCreateTodo: () => void;
-  onClickUpdate: (idx: number) => void;
-  onUpdate: (id: number, checked: boolean, todo: string) => void;
-  onInit: (e: React.MouseEvent) => void;
-  onChangeTodoInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onDelete: (id: number) => void;
-};
+type Props = Pick<UseGetTodoList, "todoList"> &
+  Pick<UseCreateTodo, "inputTodo" | "onChangeTodo"> &
+  Omit<UseUpdateTodo, "update"> & {
+    onCreateTodo: () => void;
+    onUpdate: (id: number, checked: boolean, todo: string) => void;
+    onDelete: (id: number) => void;
+  };
 
 function TodoListContents({
   todoList = [],
@@ -67,8 +63,8 @@ function TodoListContents({
                   changedTodo={changedTodo}
                   onClickUpdate={onClickUpdate}
                   onUpdate={onUpdate}
-                  onInit={onInit}
                   onChangeTodoInput={onChangeTodoInput}
+                  onInit={onInit}
                 />
               ) : (
                 <Todo

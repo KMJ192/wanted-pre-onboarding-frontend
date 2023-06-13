@@ -9,7 +9,12 @@ type GetTodoResModel = {
   userId: number;
 };
 
-function useGetTodoList() {
+type UseGetTodoList = {
+  todoList: Array<GetTodoResModel>;
+  refetchTodoList: () => void;
+};
+
+function useGetTodoList(): UseGetTodoList {
   const [todoList, setTodoList] = useState<Array<GetTodoResModel>>([]);
 
   const fetch = async () => {
@@ -36,8 +41,8 @@ function useGetTodoList() {
     fetch();
   }, []);
 
-  return { todoList, refetch: fetch };
+  return { todoList, refetchTodoList: fetch };
 }
 
-export type { GetTodoResModel };
+export type { GetTodoResModel, UseGetTodoList };
 export default useGetTodoList;

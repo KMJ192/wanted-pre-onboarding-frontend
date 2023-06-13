@@ -2,6 +2,15 @@ import { useState } from "react";
 import { fetcher } from "../../../network/api";
 import { GetTodoResModel } from "./useGetTodoList";
 
+type UseUpdateTodo = {
+  updateIdx: number;
+  changedTodo: string;
+  onClickUpdate: (idx: number) => void;
+  onChangeTodoInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onInit: (e: React.MouseEvent) => void;
+  update: (id: number, checked: boolean, todo: string) => void;
+};
+
 type Props = {
   todoList: Array<GetTodoResModel>;
 };
@@ -58,4 +67,5 @@ function useUpdateTodo({ todoList }: Props) {
   };
 }
 
+export type { UseUpdateTodo };
 export default useUpdateTodo;
