@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { fetcher } from "../../../network/api";
-import { GetTodoResModel } from "./useGetTodoList";
+
+import type { GetTodoResModel } from "./useGetTodoList";
 
 type UseUpdateTodo = {
   updateIdx: number;
@@ -16,6 +19,8 @@ type Props = {
 };
 
 function useUpdateTodo({ todoList }: Props) {
+  const navigate = useNavigate();
+
   const [updateIdx, setUpdateIdx] = useState(-1);
   const [changedTodo, setChangedTodo] = useState("");
 
@@ -36,6 +41,7 @@ function useUpdateTodo({ todoList }: Props) {
 
   const update = async (id: number, checked: boolean, todo: string) => {
     const token = window.localStorage.getItem("token");
+
     const response = await fetcher({
       method: "PUT",
       url: `todos/${id}`,
@@ -49,6 +55,13 @@ function useUpdateTodo({ todoList }: Props) {
       },
     });
     const { status, isSuccess, message } = response;
+
+    if (status === 401) {
+      window.localStorage.removeItem("token");
+      navigate("/signin");
+      return;
+    }
+
     if (status !== 200 || !isSuccess) {
       alert(message || "Network Error");
       return false;

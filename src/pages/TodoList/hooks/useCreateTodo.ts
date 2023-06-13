@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { fetcher } from "../../../network/api";
 
 type UseCreateTodo = {
@@ -8,6 +10,8 @@ type UseCreateTodo = {
 };
 
 function useCreateTodo() {
+  const navigate = useNavigate();
+
   const [todo, setTodo] = useState("");
 
   const onChangeTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +34,12 @@ function useCreateTodo() {
     });
 
     const { isSuccess, message, status } = response;
+
+    if (status === 401) {
+      window.localStorage.removeItem("token");
+      navigate("/signin");
+      return;
+    }
 
     if (status !== 201 || !isSuccess) {
       alert(message || "Network Error");

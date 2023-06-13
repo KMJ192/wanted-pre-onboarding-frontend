@@ -31,24 +31,24 @@ function SignUpContents({
           className={cx("input")}
           placeholder="email"
           type="text"
-          data-testid="email-input"
           value={email}
           onChange={onChangeEmail}
+          data-testid="email-input"
         />
         <input
           className={cx("input")}
           placeholder="password"
           type="password"
-          data-testid="password-input"
           value={password}
           onChange={onChangePassword}
+          data-testid="password-input"
         />
         <div className={cx("buttons")}>
           <button
             className={cx("button", "submit")}
-            data-testid="signup-button"
             onClick={onSubmit}
             disabled={!isValidate}
+            data-testid="signup-button"
           >
             회원가입
           </button>

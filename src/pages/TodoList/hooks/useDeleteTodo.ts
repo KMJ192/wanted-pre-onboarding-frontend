@@ -1,6 +1,10 @@
+import { useNavigate } from "react-router-dom";
+
 import { fetcher } from "../../../network/api";
 
 function useDeleteTodo() {
+  const navigate = useNavigate();
+
   const deleteTodo = async (id: number) => {
     const token = window.localStorage.getItem("token");
 
@@ -13,6 +17,13 @@ function useDeleteTodo() {
     });
 
     const { isSuccess, status, message } = response;
+
+    if (status === 401) {
+      window.localStorage.removeItem("token");
+      navigate("/signin");
+      return;
+    }
+
     if (status !== 204 || !isSuccess) {
       alert(message);
       return false;
