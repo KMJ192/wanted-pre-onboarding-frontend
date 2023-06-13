@@ -1,0 +1,17 @@
+@mixin button {
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: rgb(88, 70, 255);
+  color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(126, 112, 255);
+  }
+  &.submit {
+    &:disabled {
+      cursor: default;
+      background-color: rgb(204, 204, 204);
+    }
+  }
+}

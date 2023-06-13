@@ -1,0 +1,30 @@
+@import "../../styles/button.module.scss";
+@import "../../styles/input.module.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 200px);
+  row-gap: 36px;
+  .title {
+    font-weight: 700;
+    font-size: 36px;
+  }
+  .contents {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    .input {
+      @include input;
+    }
+    .buttons {
+      display: flex;
+      column-gap: 16px;
+      .button {
+        @include button;
+      }
+    }
+  }
+}

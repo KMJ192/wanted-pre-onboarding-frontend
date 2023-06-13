@@ -1,0 +1,49 @@
+@import "../../styles/button.module.scss";
+@import "../../styles/input.module.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  row-gap: 24px;
+  padding: 80px 240px;
+  .add {
+    display: flex;
+    column-gap: 8px;
+    .input {
+      @include input;
+    }
+    .button {
+      @include button;
+    }
+  }
+  .title {
+    font-weight: 700;
+    font-size: 36px;
+  }
+  .todo-list {
+    display: flex;
+    // flex-basis: 10%;
+    border-radius: 8px;
+    border: 1px solid #000;
+    height: 600px;
+    width: 100%;
+    overflow: auto;
+    list-style: none;
+    padding: 16px;
+    .todo {
+      display: flex;
+      align-items: center;
+      height: 10%;
+      width: 100%;
+
+      justify-content: space-between;
+      .todo-left,
+      .todo-right {
+        display: flex;
+        column-gap: 8px;
+      }
+    }
+  }
+}
