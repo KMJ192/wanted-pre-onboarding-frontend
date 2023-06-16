@@ -30,7 +30,7 @@ function Todo({
           type="checkbox"
           checked={isCompleted}
           onChange={() => {
-            onUpdate(id, isCompleted, todo);
+            onUpdate(id, !isCompleted, todo);
           }}
           readOnly
         ></input>

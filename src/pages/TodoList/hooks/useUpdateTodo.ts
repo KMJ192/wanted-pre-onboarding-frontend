@@ -39,7 +39,7 @@ function useUpdateTodo({ todoList }: Props) {
     setChangedTodo("");
   };
 
-  const update = async (id: number, checked: boolean, todo: string) => {
+  const update = async (id: number, isCompleted: boolean, todo: string) => {
     const token = window.localStorage.getItem("token");
 
     const response = await fetcher({
@@ -51,7 +51,7 @@ function useUpdateTodo({ todoList }: Props) {
       },
       data: {
         todo,
-        isCompleted: !checked,
+        isCompleted,
       },
     });
     const { status, isSuccess, message } = response;
