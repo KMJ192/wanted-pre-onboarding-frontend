@@ -26,4 +26,4 @@ npm run build
 
 ### 배포 링크
 
-[원티드 프리온보딩 프론트엔드 사전과제 링크](https://kmj-wanted-pre-onboarding-frontend.vercel.app)
+- https://kmj-wanted-pre-onboarding-frontend.vercel.app
