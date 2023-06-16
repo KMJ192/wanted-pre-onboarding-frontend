@@ -58,10 +58,8 @@ function TodoListContents({
               {idx === updateIdx ? (
                 <Modify
                   id={id}
-                  todo={todo}
                   isCompleted={isCompleted}
                   changedTodo={changedTodo}
-                  onClickUpdate={onClickUpdate}
                   onUpdate={onUpdate}
                   onChangeTodoInput={onChangeTodoInput}
                   onInit={onInit}
